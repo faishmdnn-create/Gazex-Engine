@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090914">
+  <title>GAZEX Engine — Video Enhancement Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="GAZEX Engine home">
+      <span class="brand-mark">G</span><span>GAZEX <b>ENGINE</b></span>
+    </a>
+    <div class="top-actions">
+      <select id="languageSelect" aria-label="Language">
+        <option value="id">Indonesia</option>
+        <option value="en">English</option>
+      </select>
+      <button id="signInBtn" class="button button-outline" data-i18n="loginGoogle">Login dengan Google</button>
+      <button id="signOutBtn" class="button button-outline hidden" data-i18n="logout">Keluar</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow"><span class="pulse"></span><span data-i18n="eyebrow">VIDEO ENHANCEMENT STUDIO</span></div>
+      <h1><span data-i18n="heroLine1">Upgrade your</span><br><span class="gradient-text" data-i18n="heroLine2">video experience.</span></h1>
+      <p data-i18n="heroDesc">Satu studio untuk optimasi video, konversi frame rate, dan peningkatan tampilan HDR.</p>
+      <div class="hero-pills"><span>REPACK HD</span><span>60–120 FPS</span><span>HDR ENHANCE</span></div>
+      <p class="notice" data-i18n="demoNotice">Mode awal: antarmuka dan login. Pemrosesan video asli akan diaktifkan setelah backend tersambung.</p>
+    </section>
+
+    <section class="account-panel panel">
+      <div class="account-copy">
+        <div class="section-kicker" data-i18n="account">AKUN</div>
+        <h2 id="accountTitle" data-i18n="loginRequired">Login diperlukan</h2>
+        <p id="accountMessage" data-i18n="loginMessage">Login dengan Google untuk menghubungkan akunmu.</p>
+      </div>
+      <div class="trial-chip"><span class="dot"></span><span id="trialLabel" data-i18n="trialPending">Trial: menunggu login</span></div>
+    </section>
+
+    <section class="section-heading">
+      <div><div class="section-kicker" data-i18n="toolsKicker">TOOLS</div><h2 data-i18n="chooseTool">Pilih video tool</h2></div>
+      <span class="muted small" data-i18n="localNote">Video dipilih dari perangkatmu</span>
+    </section>
+
+    <section class="tool-grid">
+      <button class="tool-card active" data-tool="repack" type="button">
+        <span class="tool-icon">HD</span><span class="tool-title">Repack HD</span>
+        <span class="tool-desc" data-i18n="repackDesc">Optimasi dan kompresi video</span><span class="tool-arrow">↗</span>
+      </button>
+      <button class="tool-card" data-tool="fps" type="button">
+        <span class="tool-icon">FPS</span><span class="tool-title">FPS Converter</span>
+        <span class="tool-desc" data-i18n="fpsDesc">Target 60, 90, atau 120 FPS</span><span class="tool-arrow">↗</span>
+      </button>
+      <button class="tool-card" data-tool="hdr" type="button">
+        <span class="tool-icon">HDR</span><span class="tool-title">HDR Enhance</span>
+        <span class="tool-desc" data-i18n="hdrDesc">Penyesuaian tampilan warna</span><span class="tool-arrow">↗</span>
+      </button>
+    </section>
+
+    <section class="workspace panel">
+      <div class="workspace-head">
+        <div><div class="section-kicker" data-i18n="workspace">WORKSPACE</div><h2 id="selectedToolTitle">Repack HD</h2></div>
+        <span class="status-badge" id="engineStatus" data-i18n="engineNotConnected">ENGINE BELUM TERHUBUNG</span>
+      </div>
+      <label class="upload-zone" for="videoInput">
+        <span class="upload-symbol">↑</span>
+        <strong data-i18n="chooseVideo">Pilih video dari perangkat</strong>
+        <span data-i18n="fileTypes">MP4, MOV, WebM — sesuai dukungan browser</span>
+        <input id="videoInput" type="file" accept="video/*">
+      </label>
+      <div id="fileInfo" class="file-info hidden"></div>
+
+      <div id="toolOptions" class="tool-options">
+        <label for="fpsSelect" id="fpsLabel" class="hidden">Target FPS</label>
+        <select id="fpsSelect" class="hidden">
+          <option value="60">60 FPS</option><option value="90">90 FPS</option><option value="120">120 FPS</option>
+        </select>
+        <button id="processBtn" class="button button-primary" disabled data-i18n="processVideo">Proses video</button>
+      </div>
+
+      <div id="progressPanel" class="progress-panel hidden" aria-live="polite">
+        <div class="progress-head"><strong id="progressTitle" data-i18n="waitingEngine">Menunggu mesin pemrosesan</strong><span id="progressPercent">—</span></div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <p id="progressMessage" class="muted small" data-i18n="backendRequired">Pemrosesan belum berjalan. Backend video perlu dihubungkan.</p>
+      </div>
+
+      <div id="previewPanel" class="preview-panel hidden">
+        <div class="section-kicker" data-i18n="preview">PREVIEW</div>
+        <h3 data-i18n="beforeAfter">Before / After</h3>
+        <div class="compare-grid">
+          <div class="video-box"><span data-i18n="originalVideo">VIDEO ASLI</span><video id="originalPreview" controls playsinline></video></div>
+          <div class="video-box"><span data-i18n="processedVideo">VIDEO HASIL</span><div class="empty-result" data-i18n="resultPlaceholder">Hasil akan muncul setelah backend pemrosesan aktif.</div><video id="resultPreview" controls playsinline class="hidden"></video></div>
+        </div>
+        <div class="metadata-wrap">
+          <h3 data-i18n="videoDetails">Detail video</h3>
+          <div class="metadata-table">
+            <div class="meta-row meta-head"><span data-i18n="property">Properti</span><span data-i18n="original">Asli</span><span data-i18n="result">Hasil</span></div>
+            <div class="meta-row"><span data-i18n="format">Format</span><strong id="originalFormat">—</strong><strong id="resultFormat">—</strong></div>
+            <div class="meta-row"><span data-i18n="resolution">Resolusi</span><strong id="originalResolution">—</strong><strong id="resultResolution">—</strong></div>
+            <div class="meta-row"><span>FPS</span><strong id="originalFps">—</strong><strong id="resultFps">—</strong></div>
+            <div class="meta-row"><span data-i18n="size">Ukuran file</span><strong id="originalSize">—</strong><strong id="resultSize">—</strong></div>
+            <div class="meta-row"><span data-i18n="duration">Durasi</span><strong id="originalDuration">—</strong><strong id="resultDuration">—</strong></div>
+          </div>
+          <p class="muted tiny" data-i18n="metadataNote">Data asli dibaca dari file lokal. Kolom hasil tetap kosong sampai video benar-benar diproses.</p>
+        </div>
+        <div class="result-actions">
+          <button id="downloadBtn" class="button button-primary" disabled data-i18n="saveVideo">Simpan video gazexical</button>
+          <button id="tiktokBtn" class="button button-outline" disabled data-i18n="shareTikTok">Lanjut ke TikTok</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-note">
+      <span>GAZEX ENGINE</span><span data-i18n="footerNote">Video processing requires a connected processing engine.</span>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
